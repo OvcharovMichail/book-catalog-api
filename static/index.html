@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Catalog</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Каталог книг</h1>
+        
+        <h2>Добавить книгу</h2>
+        <input type="text" id="title" placeholder="Название книги">
+        <input type="text" id="author" placeholder="Автор">
+        <input type="number" id="year" placeholder="Год издания">
+        <button onclick="addBook()">Добавить</button>
+
+        <h2>Список книг</h2>
+        <button onclick="loadBooks()">Обновить список</button>
+        <ul id="bookList"></ul>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
