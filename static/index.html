@@ -8,13 +8,17 @@
 </head>
 <body>
     <div class="container">
-        <h1>📚 Каталог книг</h1>
+        <h1>Каталог книг</h1>
         
         <h2>Добавить книгу</h2>
         <input type="text" id="title" placeholder="Название книги">
         <input type="text" id="author" placeholder="Автор">
         <input type="number" id="year" placeholder="Год издания">
         <button onclick="addBook()">Добавить</button>
+
+        <h2>Поиск по автору</h2>
+        <input type="text" id="searchAuthor" placeholder="Имя автора (например, Толстой)">
+        <button onclick="searchByAuthor()">Найти</button>
 
         <h2>Список книг</h2>
         <button onclick="loadBooks()">Обновить список</button>

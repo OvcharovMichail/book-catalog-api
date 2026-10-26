@@ -44,3 +44,28 @@ async function addBook() {
         alert('Ошибка: ' + error.detail);
     }
 }
+
+async function searchByAuthor() {
+    const author = document.getElementById('searchAuthor').value.trim();
+    const list = document.getElementById('bookList');
+
+    if (!author) {
+        alert('Введите имя автора для поиска');
+        return;
+    }
+
+    const response = await fetch(`/books/author/${encodeURIComponent(author)}`);
+    const data = await response.json();
+    
+    list.innerHTML = '';
+    if (data.count === 0) {
+        list.innerHTML = `<li>Книг автора "${author}" не найдено.</li>`;
+        return;
+    }
+
+    data.books.forEach(book => {
+        const li = document.createElement('li');
+        li.textContent = `${book.title} — ${book.author} (${book.year})`;
+        list.appendChild(li);
+    });
+}
