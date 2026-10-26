@@ -1,6 +1,8 @@
 import os
 import logging
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 logging.basicConfig(
@@ -10,8 +12,11 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 APP_VERSION = os.getenv("APP_VERSION", "1.0.0")
+APP_NAME = os.getenv("APP_NAME", "Book Catalog API")
+APP_AUTHOR = os.getenv("APP_AUTHOR", "Your Name")
 
-app = FastAPI(title="Book Catalog API")
+app = FastAPI(title=APP_NAME)
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 books_db = []
 
@@ -24,6 +29,11 @@ class Book(BaseModel):
 async def startup_event():
     logger.info(f"Book Catalog API starting. Version: {APP_VERSION}")
 
+@app.get("/")
+def read_root():
+    logger.info("Root endpoint requested")
+    return FileResponse("static/index.html")
+
 @app.get("/health")
 def health_check():
     logger.info("Health check requested")
@@ -32,7 +42,11 @@ def health_check():
 @app.get("/version")
 def get_version():
     logger.info("Version requested")
-    return {"version": APP_VERSION}
+    return {
+        "name": APP_NAME,
+        "version": APP_VERSION,
+        "author": APP_AUTHOR
+    }
 
 @app.post("/books")
 def add_book(book: Book):
